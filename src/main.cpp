@@ -17,17 +17,17 @@ const int BUFFER_SIZE = JSON_OBJECT_SIZE(10);
 byte red = 255;
 byte green = 255;
 byte blue = 255;
-byte brightness = 204;           // 80%
-String effect = "rainbow cycle"; // default effect ("static", "rainbow cycle" etc.)
+byte brightness = 204;    // 80%
+String effect = "static"; // default effect ("static", "rainbow cycle" etc.)
 int speed = 50;
 int color_temp = 153;
 
 /******************************** OTHER GLOBALS *******************************/
-const char *on_cmd = "ON";
-const char *off_cmd = "OFF";
+const char *on_cmd = "on";
+const char *off_cmd = "off";
 const char *will_msg = "Offline";
 const char *online_msg = "Online";
-const char *effectString = "rainbow cycle";
+const char *effectString = "static";
 bool stateOn = DEFAULT_POWER_ON_STATE;
 
 WiFiClient espClient;
@@ -198,6 +198,8 @@ void sendState() {
 
   char combinedArray[sizeof(MQTT_STATE_TOPIC_PREFIX) + sizeof(deviceName)];
   sprintf(combinedArray, "%s%s", MQTT_STATE_TOPIC_PREFIX, deviceName); // with word space
+  Serial.print(combinedArray);
+  Serial.println(buffer);
   client.publish(combinedArray, buffer, true);
 }
 
@@ -346,6 +348,7 @@ void setup() {
   digitalWrite(LED_BUILTIN, LOW); // Turn the status LED on
 
   Serial.begin(115200);
+
 
   delay(500); // Wait for Leds to init and Cap to charge
 
