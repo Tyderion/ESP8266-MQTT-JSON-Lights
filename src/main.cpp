@@ -313,6 +313,7 @@ void callback(char *topic, byte *payload, unsigned int length) {
 
   if (!processJson(message))
     return;
+    
 
   sendState();
 }
